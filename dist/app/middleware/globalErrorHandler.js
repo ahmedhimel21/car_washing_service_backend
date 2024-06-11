@@ -7,6 +7,8 @@ const mongooseValidationError_1 = __importDefault(require("../Error/mongooseVali
 const config_1 = __importDefault(require("../config"));
 const handleDuplicateError_1 = __importDefault(require("../Error/handleDuplicateError"));
 const handleCastError_1 = __importDefault(require("../Error/handleCastError"));
+const zod_1 = require("zod");
+const handleZodValidationError_1 = __importDefault(require("../Error/handleZodValidationError"));
 const globalErrorHandler = (err, req, res, next) => {
     // Check if headers are already sent to prevent setting them again
     if (res.headersSent) {
@@ -40,6 +42,12 @@ const globalErrorHandler = (err, req, res, next) => {
     }
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'CastError') {
         const simplifiedErrorResponse = (0, handleCastError_1.default)(err);
+        statusCode = simplifiedErrorResponse.statusCode;
+        message = simplifiedErrorResponse.message;
+        errorSources = simplifiedErrorResponse.errorSources;
+    }
+    else if (err instanceof zod_1.ZodError) {
+        const simplifiedErrorResponse = (0, handleZodValidationError_1.default)(err);
         statusCode = simplifiedErrorResponse.statusCode;
         message = simplifiedErrorResponse.message;
         errorSources = simplifiedErrorResponse.errorSources;

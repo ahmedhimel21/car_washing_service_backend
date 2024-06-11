@@ -4,9 +4,9 @@ import { TErrorSources } from '../interface/error.interface'
 import handleValidationError from '../Error/mongooseValidationError'
 import config from '../config'
 import handleDuplicateError from '../Error/handleDuplicateError'
-import handleError from '../Error/handleError'
-import AppError from '../Error/AppError'
 import handleCastError from '../Error/handleCastError'
+import { ZodError } from 'zod'
+import handleZodValidationError from '../Error/handleZodValidationError'
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // Check if headers are already sent to prevent setting them again
@@ -40,6 +40,11 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorSources = simplifiedErrorResponse.errorSources
   } else if (err?.name === 'CastError') {
     const simplifiedErrorResponse = handleCastError(err)
+    statusCode = simplifiedErrorResponse.statusCode
+    message = simplifiedErrorResponse.message
+    errorSources = simplifiedErrorResponse.errorSources
+  } else if (err instanceof ZodError) {
+    const simplifiedErrorResponse = handleZodValidationError(err)
     statusCode = simplifiedErrorResponse.statusCode
     message = simplifiedErrorResponse.message
     errorSources = simplifiedErrorResponse.errorSources
