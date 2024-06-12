@@ -35,8 +35,21 @@ const getAllServicesFromDB = catchAsync(async (req, res) => {
   })
 })
 
+//get all services
+const updateService = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const result = await ServiceServices.updateServiceIntoDB(id, req.body)
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Service updated successfully',
+    data: result,
+  })
+})
+
 export const ServiceControllers = {
   createService,
   getSpecificService,
   getAllServicesFromDB,
+  updateService,
 }

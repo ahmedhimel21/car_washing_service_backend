@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { ServiceControllers } from './service.controller'
+import validateRequest from '../../middleware/validateRequest'
+import { ServiceValidations } from './service.validation'
 
 const router = Router()
 
@@ -11,5 +13,12 @@ router.get('/:id', ServiceControllers.getSpecificService)
 
 //get all services route
 router.get('/', ServiceControllers.getAllServicesFromDB)
+
+//update service route
+router.put(
+  '/:id',
+  validateRequest(ServiceValidations.serviceUpdateValidationSchema),
+  ServiceControllers.updateService,
+)
 
 export const ServiceRoutes = router
