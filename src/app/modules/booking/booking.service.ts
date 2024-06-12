@@ -26,7 +26,11 @@ const createBookingIntoDB = async (payload: TBooking) => {
   if (isSlotExists.isBooked === 'booked') {
     throw new AppError(404, 'Slot is booked!')
   }
-  const result = await Booking.create(payload)
+  const result = (
+    await (
+      await (await Booking.create(payload)).populate('customer')
+    ).populate('service')
+  ).populate('slot')
   return result
 }
 
