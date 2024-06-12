@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { BookingControllers } from './booking.controller'
 import validateRequest from '../../middleware/validateRequest'
 import { BookingValidations } from './booking.validation'
+import auth from '../../middleware/auth'
 
 const router = Router()
 
@@ -11,6 +12,6 @@ router.post(
   BookingControllers.createBooking,
 )
 
-router.get('/', BookingControllers.getAllBookings)
+router.get('/', auth(), BookingControllers.getAllBookings)
 
 export const BookingRoutes = router

@@ -12,31 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthControllers = void 0;
+exports.BookingControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
-const auth_service_1 = require("./auth.service");
-const registeredUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.AuthServices.registeredUserIntoDB(req.body);
+const booking_service_1 = require("./booking.service");
+const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_service_1.BookingServices.createBookingIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'User registered successfully',
+        message: 'Booking successful',
         data: result,
     });
 }));
-const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.AuthServices.loginUser(req.body);
-    const { accessToken, user } = result;
+const getAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_service_1.BookingServices.getAllBookingsFromDB();
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'User logged in successfully!',
-        token: accessToken,
-        data: user,
+        message: 'All bookings retrieved successfully',
+        data: result,
     });
 }));
-exports.AuthControllers = {
-    registeredUser,
-    loginUser,
+exports.BookingControllers = {
+    createBooking,
+    getAllBookings,
 };

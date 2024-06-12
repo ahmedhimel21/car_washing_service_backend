@@ -8,56 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-delete-var */
 const mongoose_1 = require("mongoose");
-const user_constant_1 = require("./user.constant");
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const config_1 = __importDefault(require("../../config"));
-const userSchema = new mongoose_1.Schema({
+const serviceSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
-    },
-    email: {
-        type: String,
-        required: true,
         unique: true,
     },
-    password: {
+    description: {
         type: String,
-        required: true,
-        select: 0,
-    },
-    phone: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    role: {
-        type: String,
-        enum: user_constant_1.nameEnum,
         required: true,
     },
-    address: {
-        type: String,
+    price: {
+        type: Number,
         required: true,
+    },
+    duration: {
+        type: Number,
+        required: true,
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
     },
 }, { timestamps: true });
-userSchema.pre('save', function (next) {
+//isServiceExists statics method
+serviceSchema.statics.isServiceExists = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
-        this.password = yield bcrypt_1.default.hash(this.password, Number(config_1.default.bcrypt_salt_rounds));
-        next();
+        return yield Service.findById(id);
     });
-});
-//remove user from response
-userSchema.methods.toJSON = function () {
-    const obj = this.toObject();
-    delete obj.password;
-    return obj;
 };
-const User = (0, mongoose_1.model)('user', userSchema);
-exports.default = User;
+const Service = (0, mongoose_1.model)('service', serviceSchema);
+exports.default = Service;

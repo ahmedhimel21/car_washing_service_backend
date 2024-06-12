@@ -12,31 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthControllers = void 0;
+exports.SlotControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
-const auth_service_1 = require("./auth.service");
-const registeredUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.AuthServices.registeredUserIntoDB(req.body);
+const slot_service_1 = require("./slot.service");
+//create slots
+const createSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_service_1.SlotServices.createSlotIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'User registered successfully',
+        message: 'Slots created successfully',
         data: result,
     });
 }));
-const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.AuthServices.loginUser(req.body);
-    const { accessToken, user } = result;
+//get all slots from db
+const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = req.query;
+    const result = yield slot_service_1.SlotServices.getAllSlotsFromDB(query);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'User logged in successfully!',
-        token: accessToken,
-        data: user,
+        message: 'Available slots retrieved successfully',
+        data: result,
     });
 }));
-exports.AuthControllers = {
-    registeredUser,
-    loginUser,
+exports.SlotControllers = {
+    createSlot,
+    getAllSlots,
 };
