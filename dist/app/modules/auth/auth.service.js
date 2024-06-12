@@ -39,7 +39,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         role: user === null || user === void 0 ? void 0 : user.role,
     };
     const accessToken = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.jwt_access_secret, {
-        expiresIn: '2d',
+        expiresIn: config_1.default.jwt_access_expires_in,
     });
     return {
         accessToken: `Bearer ${accessToken}`,

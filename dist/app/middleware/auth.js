@@ -16,7 +16,7 @@ const catchAsync_1 = __importDefault(require("../utility/catchAsync"));
 const AppError_1 = __importDefault(require("../Error/AppError"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config"));
-const auth = () => {
+const auth = (...userRoles) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
@@ -25,6 +25,10 @@ const auth = () => {
             throw new AppError_1.default(401, 'You are not authorized');
         }
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_access_secret);
+        //check user role
+        if (userRoles && !userRoles.includes(decoded === null || decoded === void 0 ? void 0 : decoded.role)) {
+            throw new AppError_1.default(401, 'You are not authorized');
+        }
         req.user = decoded;
         next();
     }));
