@@ -56,6 +56,12 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return result
 }
 
+const getAllSlotsFromDB = async () => {
+  const result = await Slot.find({ isBooked: 'available' })
+  return !result.length ? 'No slots available at this moment!' : result
+}
+
 export const SlotServices = {
   createSlotIntoDB,
+  getAllSlotsFromDB,
 }
