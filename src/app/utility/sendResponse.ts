@@ -5,6 +5,7 @@ const sendResponse = <T>(res: Response, data: TData<T>) => {
   return res.status(200).json({
     success: data?.success,
     message: data?.message,
+    token: data.token,
     data: data?.data,
   })
 }
