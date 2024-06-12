@@ -7,7 +7,7 @@ const handleDuplicateError = (err) => {
     const message = 'Duplicate error';
     const errorSources = [
         {
-            path: err.errmsg.match(pattern)[1],
+            path: err.errmsg.match(pattern),
             message: err === null || err === void 0 ? void 0 : err.errmsg,
         },
     ];

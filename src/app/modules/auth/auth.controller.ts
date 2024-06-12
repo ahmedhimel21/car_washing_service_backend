@@ -4,6 +4,7 @@ import { AuthServices } from './auth.service'
 
 const registeredUser = catchAsync(async (req, res) => {
   const result = await AuthServices.registeredUserIntoDB(req.body)
+  // const { name, email, phone, role, address, _id } = result
   sendResponse(res, {
     statusCode: 200,
     success: true,
