@@ -21,4 +21,7 @@ router.put(
   ServiceControllers.updateService,
 )
 
+//delete service route
+router.delete('/:id', ServiceControllers.deleteService)
+
 export const ServiceRoutes = router
