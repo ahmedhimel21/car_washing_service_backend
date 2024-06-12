@@ -14,7 +14,8 @@ const createSlot = catchAsync(async (req, res) => {
 })
 //get all slots from db
 const getAllSlots = catchAsync(async (req, res) => {
-  const result = await SlotServices.getAllSlotsFromDB()
+  const query = req.query
+  const result = await SlotServices.getAllSlotsFromDB(query)
   sendResponse(res, {
     statusCode: 200,
     success: true,

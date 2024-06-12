@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import buildQuery from '../../builder/queryBuilder'
 import AppError from '../../Error/AppError'
 import Service from '../service/service.model'
 import { TSlot } from './slot.interface'
@@ -56,8 +57,13 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return result
 }
 
-const getAllSlotsFromDB = async () => {
-  const result = await Slot.find({ isBooked: 'available' })
+const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
+  const searchAbleFields = ['date']
+  const result = await buildQuery(
+    Slot.find({ isBooked: 'available' }).populate('service'),
+    query,
+    searchAbleFields,
+  )
   return !result.length ? 'No slots available at this moment!' : result
 }
 
