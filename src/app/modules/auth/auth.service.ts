@@ -13,7 +13,7 @@ const registeredUserIntoDB = async (payload: TUser) => {
 }
 
 const loginUser = async (payload: TLoginUser) => {
-  const user = await User.findOne({ email: payload.email })
+  const user = await User.findOne({ email: payload.email }).select('+password')
   // check user exists
   if (!user) {
     throw new AppError(status.NOT_FOUND, 'User does not exists!')
@@ -34,7 +34,7 @@ const loginUser = async (payload: TLoginUser) => {
     expiresIn: '2d',
   })
   return {
-    accessToken,
+    accessToken: `Bearer ${accessToken}`,
     user,
   }
 }

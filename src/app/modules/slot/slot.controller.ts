@@ -8,7 +8,7 @@ const createSlot = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Slot has been created successfully',
+    message: 'Slots created successfully',
     data: result,
   })
 })
