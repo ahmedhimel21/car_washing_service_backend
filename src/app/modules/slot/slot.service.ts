@@ -7,10 +7,10 @@ const createSlotIntoDB = async (payload: TSlot) => {
   // convert to minutes -> ["9", "30"][0,1]*60
   const startMinutes =
     parseInt(startTime.split(':')[0]) * serviceDuration +
-    parseInt(startTime.split(':')[1]) * serviceDuration
+    parseInt(startTime.split(':')[1])
   const endMinutes =
     parseInt(endTime.split(':')[0]) * serviceDuration +
-    parseInt(endTime.split(':')[1]) * serviceDuration
+    parseInt(endTime.split(':')[1])
   // calculate total duration
   const totalDuration = endMinutes - startMinutes
   //   calculate number of slots
