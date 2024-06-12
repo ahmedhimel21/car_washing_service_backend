@@ -34,6 +34,15 @@ const createBookingIntoDB = async (payload: TBooking) => {
   return result
 }
 
+const getAllBookingsFromDB = async () => {
+  const result = await Booking.find()
+    .populate('customer')
+    .populate('service')
+    .populate('slot')
+  return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
+  getAllBookingsFromDB,
 }

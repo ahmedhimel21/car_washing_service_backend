@@ -11,4 +11,6 @@ router.post(
   BookingControllers.createBooking,
 )
 
+router.get('/', BookingControllers.getAllBookings)
+
 export const BookingRoutes = router
