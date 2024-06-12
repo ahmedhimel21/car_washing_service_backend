@@ -1,3 +1,4 @@
+/* eslint-disable no-delete-var */
 import { model, Schema } from 'mongoose'
 import { TUser } from './user.interface'
 import { nameEnum } from './user.constant'
@@ -45,10 +46,12 @@ userSchema.pre('save', async function (next) {
   )
   next()
 })
-userSchema.post('save', function (doc, next) {
-  doc.password = ''
-  next()
-})
+//remove user from response
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject()
+  delete obj.password
+  return obj
+}
 
 const User = model<TUser>('user', userSchema)
 export default User
