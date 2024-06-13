@@ -32,7 +32,7 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
     query,
     searchAbleFields,
   )
-  return !result.length ? 'No slots available at this moment!' : result
+  return !result.length ? [] : result
 }
 
 export const SlotServices = {

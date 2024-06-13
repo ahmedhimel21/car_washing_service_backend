@@ -1,18 +1,10 @@
-import { TErrorMessages } from '../interface/error.interface'
-
-const handleError = () => {
-  const statusCode = 400
-  const message = ''
-  const errorSources: TErrorMessages = [
-    {
-      path: 'throw Error || throw AppError',
-      message: 'Error occurred',
-    },
-  ]
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const handleError = (err: any) => {
+  const statusCode = err.statusCode || 400
+  const message = err.message
   return {
     statusCode,
     message,
-    errorSources,
   }
 }
 export default handleError

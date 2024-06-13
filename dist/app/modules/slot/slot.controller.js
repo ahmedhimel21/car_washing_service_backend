@@ -31,9 +31,11 @@ const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     const query = req.query;
     const result = yield slot_service_1.SlotServices.getAllSlotsFromDB(query);
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Available slots retrieved successfully',
+        statusCode: !result.length ? 404 : 200,
+        success: !result.length ? false : true,
+        message: !result.length
+            ? 'No Data Found'
+            : 'Available slots retrieved successfully',
         data: result,
     });
 }));

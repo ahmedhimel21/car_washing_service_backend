@@ -49,7 +49,11 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     )
 
     //updating slot status: transaction-2
-    await isSlotExists.updateOne({ isBooked: 'booked' }, { session })
+    await Slot.findByIdAndUpdate(
+      payload.slot,
+      { isBooked: 'booked' },
+      { new: true, session },
+    )
 
     await session.commitTransaction()
     await session.endSession()
@@ -66,7 +70,7 @@ const getAllBookingsFromDB = async () => {
     .populate('customer')
     .populate('service')
     .populate('slot')
-  return result
+  return !result.length ? [] : result
 }
 
 const getUserBookingsFromDB = async (user: JwtPayload) => {
@@ -76,7 +80,7 @@ const getUserBookingsFromDB = async (user: JwtPayload) => {
     .populate('customer')
     .populate('service')
     .populate('slot')
-  return result
+  return !result.length ? [] : result
 }
 
 export const BookingServices = {

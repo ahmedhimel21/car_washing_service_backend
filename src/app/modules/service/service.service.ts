@@ -22,7 +22,7 @@ const getSpecificServiceFromDB = async (id: string) => {
 //get all services
 const getAllServicesFromDB = async () => {
   const result = await Service.find()
-  return result
+  return !result.length ? [] : result
 }
 
 //update service

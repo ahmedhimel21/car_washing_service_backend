@@ -9,6 +9,8 @@ const handleDuplicateError_1 = __importDefault(require("../Error/handleDuplicate
 const handleCastError_1 = __importDefault(require("../Error/handleCastError"));
 const zod_1 = require("zod");
 const handleZodValidationError_1 = __importDefault(require("../Error/handleZodValidationError"));
+const AppError_1 = __importDefault(require("../Error/AppError"));
+const handleError_1 = __importDefault(require("../Error/handleError"));
 const globalErrorHandler = (err, req, res, next) => {
     // Check if headers are already sent to prevent setting them again
     if (res.headersSent) {
@@ -29,34 +31,44 @@ const globalErrorHandler = (err, req, res, next) => {
      * errorSources
      */
     if ((err === null || err === void 0 ? void 0 : err.name) === 'ValidationError') {
+        // handling mongoose validation error
         const simplifiedErrorResponse = (0, mongooseValidationError_1.default)(err);
         statusCode = simplifiedErrorResponse.statusCode;
         message = simplifiedErrorResponse.message;
         errorMessages = simplifiedErrorResponse.errorSources;
     }
     else if ((err === null || err === void 0 ? void 0 : err.code) === 11000) {
+        //handling duplicate error
         const simplifiedErrorResponse = (0, handleDuplicateError_1.default)(err);
         statusCode = simplifiedErrorResponse.statusCode;
         message = simplifiedErrorResponse.message;
         errorMessages = simplifiedErrorResponse.errorSources;
     }
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'CastError') {
+        //handling cast error
         const simplifiedErrorResponse = (0, handleCastError_1.default)(err);
         statusCode = simplifiedErrorResponse.statusCode;
         message = simplifiedErrorResponse.message;
         errorMessages = simplifiedErrorResponse.errorSources;
     }
     else if (err instanceof zod_1.ZodError) {
+        //handing zod validation error
         const simplifiedErrorResponse = (0, handleZodValidationError_1.default)(err);
         statusCode = simplifiedErrorResponse.statusCode;
         message = simplifiedErrorResponse.message;
         errorMessages = simplifiedErrorResponse.errorSources;
     }
+    else if (err instanceof AppError_1.default || err instanceof Error) {
+        const simplifiedErrorResponse = (0, handleError_1.default)(err);
+        statusCode = simplifiedErrorResponse.statusCode;
+        message = simplifiedErrorResponse.message;
+        errorMessages = [];
+    }
     return res.status(statusCode).json({
         success: false,
         message,
         errorMessages,
-        err,
+        error: config_1.default.NODE_ENV === 'development' ? err : null,
         stack: config_1.default.NODE_ENV === 'development' ? err === null || err === void 0 ? void 0 : err.stack : null,
     });
 };

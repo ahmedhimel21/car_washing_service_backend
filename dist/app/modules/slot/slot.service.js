@@ -38,7 +38,7 @@ const createSlotIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
 const getAllSlotsFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const searchAbleFields = ['date'];
     const result = yield (0, queryBuilder_1.default)(slot_model_1.default.find({ isBooked: 'available' }).populate('service'), query, searchAbleFields);
-    return !result.length ? 'No slots available at this moment!' : result;
+    return !result.length ? [] : result;
 });
 exports.SlotServices = {
     createSlotIntoDB,

@@ -13,7 +13,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: ['http://localhost:5173'] }));
 app.use(express_1.default.json());
 // application routes
-app.use('/api', routes_1.routes);
+app.use('/', routes_1.routes);
 app.get('/', (req, res) => {
     res.send('Server is running');
 });

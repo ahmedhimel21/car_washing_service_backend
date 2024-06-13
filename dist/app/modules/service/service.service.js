@@ -33,7 +33,7 @@ const getSpecificServiceFromDB = (id) => __awaiter(void 0, void 0, void 0, funct
 //get all services
 const getAllServicesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield service_model_1.default.find();
-    return result;
+    return !result.length ? [] : result;
 });
 //update service
 const updateServiceIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,10 +41,6 @@ const updateServiceIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
     //check isService exists
     if (!service) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Service not found!');
-    }
-    //check is service deleted
-    if (service === null || service === void 0 ? void 0 : service.isDeleted) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Unable to update, Service deleted!');
     }
     const result = yield service_model_1.default.findByIdAndUpdate(id, payload, {
         new: true,

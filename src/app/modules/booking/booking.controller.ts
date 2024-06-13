@@ -36,9 +36,11 @@ const createBooking = catchAsync(async (req, res) => {
 const getAllBookings = catchAsync(async (req, res) => {
   const result = await BookingServices.getAllBookingsFromDB()
   sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'All bookings retrieved successfully',
+    statusCode: !result.length ? 404 : 200,
+    success: !result.length ? false : true,
+    message: !result.length
+      ? 'No Data Found'
+      : 'All bookings retrieved successfully',
     data: result,
   })
 })
@@ -47,9 +49,11 @@ const getUserBookings = catchAsync(async (req, res) => {
   const user = req.user
   const result = await BookingServices.getUserBookingsFromDB(user)
   sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'User bookings retrieved successfully',
+    statusCode: !result.length ? 404 : 200,
+    success: !result.length ? false : true,
+    message: !result.length
+      ? 'No Data Found'
+      : 'User bookings retrieved successfully',
     data: result,
   })
 })

@@ -1,18 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const handleError = () => {
-    const statusCode = 400;
-    const message = '';
-    const errorSources = [
-        {
-            path: 'throw Error || throw AppError',
-            message: 'Error occurred',
-        },
-    ];
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const handleError = (err) => {
+    const statusCode = err.statusCode || 400;
+    const message = err.message;
     return {
         statusCode,
         message,
-        errorSources,
     };
 };
 exports.default = handleError;

@@ -9,27 +9,23 @@ const booking_route_1 = require("../modules/booking/booking.route");
 const router = (0, express_1.Router)();
 const moduleRoutes = [
     {
-        path: '/auth',
+        path: '/api/auth',
         route: auth_route_1.AuthRoutes,
     },
     {
-        path: '/services',
+        path: '/api/services',
         route: service_route_1.ServiceRoutes,
     },
     {
-        path: '/services',
+        path: '/api/services',
         route: slot_route_1.SlotRoutes,
     },
     {
-        path: '/slots',
+        path: '/api/slots',
         route: slot_route_1.SlotRoutes,
     },
     {
-        path: '/v1',
-        route: booking_route_1.BookingRoutes,
-    },
-    {
-        path: '/my-bookings',
+        path: '/api',
         route: booking_route_1.BookingRoutes,
     },
 ];

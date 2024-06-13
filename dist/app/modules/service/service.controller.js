@@ -41,9 +41,11 @@ const getSpecificService = (0, catchAsync_1.default)((req, res) => __awaiter(voi
 const getAllServicesFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield service_service_1.ServiceServices.getAllServicesFromDB();
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Services retrieved successfully',
+        statusCode: !result.length ? 404 : 200,
+        success: !result.length ? false : true,
+        message: !result.length
+            ? 'No Data Found'
+            : 'Services retrieved successfully',
         data: result,
     });
 }));

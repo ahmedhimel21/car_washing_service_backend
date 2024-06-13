@@ -16,6 +16,7 @@ exports.AuthControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
 const auth_service_1 = require("./auth.service");
+//signup user
 const registeredUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.registeredUserIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
@@ -25,6 +26,7 @@ const registeredUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+//login user
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.loginUser(req.body);
     const { accessToken, user } = result;

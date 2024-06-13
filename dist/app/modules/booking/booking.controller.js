@@ -39,9 +39,11 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 const getAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_service_1.BookingServices.getAllBookingsFromDB();
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'All bookings retrieved successfully',
+        statusCode: !result.length ? 404 : 200,
+        success: !result.length ? false : true,
+        message: !result.length
+            ? 'No Data Found'
+            : 'All bookings retrieved successfully',
         data: result,
     });
 }));
@@ -49,9 +51,11 @@ const getUserBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
     const user = req.user;
     const result = yield booking_service_1.BookingServices.getUserBookingsFromDB(user);
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'User bookings retrieved successfully',
+        statusCode: !result.length ? 404 : 200,
+        success: !result.length ? false : true,
+        message: !result.length
+            ? 'No Data Found'
+            : 'User bookings retrieved successfully',
         data: result,
     });
 }));
