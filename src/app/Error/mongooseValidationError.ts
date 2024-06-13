@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
-import { TErrorSources } from '../interface/error.interface'
+import { TErrorMessages } from '../interface/error.interface'
 
 const handleValidationError = (err: mongoose.Error.ValidationError) => {
   const statusCode = 400
   const message = 'Validation Error'
-  const errorSources: TErrorSources = Object.values(err?.errors).map(val => {
+  const errorSources: TErrorMessages = Object.values(err?.errors).map(val => {
     return {
       path: val?.path,
       message: val?.message,

@@ -1,9 +1,9 @@
-import { TErrorSources } from '../interface/error.interface'
+import { TErrorMessages } from '../interface/error.interface'
 
 const handleError = () => {
   const statusCode = 400
   const message = ''
-  const errorSources: TErrorSources = [
+  const errorSources: TErrorMessages = [
     {
       path: 'throw Error || throw AppError',
       message: 'Error occurred',
