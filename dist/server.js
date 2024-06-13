@@ -20,12 +20,12 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         yield mongoose_1.default.connect(config_1.default.db_url);
         server = app_1.default.listen(config_1.default.port, () => {
-            console.log(`Example app listening on port ${config_1.default.port}`);
+            console.log(`Car washing app listening on port ${config_1.default.port}`);
         });
     });
 }
 main();
-process.on("unhandledRejection", () => {
+process.on('unhandledRejection', () => {
     console.log(`👿 unhandledRejection detected, shuting down`);
     if (server) {
         server.close(() => {
@@ -34,7 +34,7 @@ process.on("unhandledRejection", () => {
     }
     process.exit(1);
 });
-process.on("uncaughtException", () => {
+process.on('uncaughtException', () => {
     console.log(`👿 uncaughtException detected, shuting down...`);
     process.exit(1);
 });

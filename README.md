@@ -1,6 +1,6 @@
 # Car Wash Management System
 
-[Live URL](https://your-new-vercel-live-url.com)
+[Live URL](https://car-washing-backend.vercel.app/)
 
 ## Table of Contents
 
