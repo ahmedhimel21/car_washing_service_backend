@@ -10,7 +10,7 @@ app.use(cors({ origin: ['http://localhost:5173'] }))
 app.use(express.json())
 
 // application routes
-app.use('/api', routes)
+app.use('/', routes)
 
 app.get('/', (req, res) => {
   res.send('Server is running')

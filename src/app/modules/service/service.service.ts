@@ -32,10 +32,7 @@ const updateServiceIntoDB = async (id: string, payload: Partial<TService>) => {
   if (!service) {
     throw new AppError(status.NOT_FOUND, 'Service not found!')
   }
-  //check is service deleted
-  if (service?.isDeleted) {
-    throw new AppError(status.NOT_FOUND, 'Unable to update, Service deleted!')
-  }
+
   const result = await Service.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

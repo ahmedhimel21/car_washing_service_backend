@@ -49,7 +49,7 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     )
 
     //updating slot status: transaction-2
-    await isSlotExists.updateOne({ isBooked: 'booked' }, { new: true, session })
+    await isSlotExists.updateOne({ isBooked: 'booked' }, { session })
 
     await session.commitTransaction()
     await session.endSession()

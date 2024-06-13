@@ -8,13 +8,17 @@ import { USER_ROLE } from '../user/user.constant'
 const router = Router()
 
 router.post(
-  '/',
+  '/bookings',
   auth(USER_ROLE.user),
   validateRequest(BookingValidations.bookingCreateValidationSchema),
   BookingControllers.createBooking,
 )
 
-router.get('/', auth(USER_ROLE.admin), BookingControllers.getAllBookings)
+router.get(
+  '/bookings',
+  auth(USER_ROLE.admin),
+  BookingControllers.getAllBookings,
+)
 
 router.get(
   '/my-bookings',

@@ -8,27 +8,23 @@ const router = Router()
 
 const moduleRoutes = [
   {
-    path: '/auth',
+    path: '/api/auth',
     route: AuthRoutes,
   },
   {
-    path: '/services',
+    path: '/api/services',
     route: ServiceRoutes,
   },
   {
-    path: '/services',
+    path: '/api/services',
     route: SlotRoutes,
   },
   {
-    path: '/slots',
+    path: '/api/slots',
     route: SlotRoutes,
   },
   {
-    path: '/v1',
-    route: BookingRoutes,
-  },
-  {
-    path: '/my-bookings',
+    path: '/api',
     route: BookingRoutes,
   },
 ]
