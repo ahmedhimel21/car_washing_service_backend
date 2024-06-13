@@ -8,15 +8,17 @@ const express_1 = require("express");
 const service_controller_1 = require("./service.controller");
 const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
 const service_validation_1 = require("./service.validation");
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const user_constant_1 = require("../user/user.constant");
 const router = (0, express_1.Router)();
 //create service route
-router.post('/', service_controller_1.ServiceControllers.createService);
+router.post('/', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), service_controller_1.ServiceControllers.createService);
 //get specific service route
 router.get('/:id', service_controller_1.ServiceControllers.getSpecificService);
 //get all services route
 router.get('/', service_controller_1.ServiceControllers.getAllServicesFromDB);
 //update service route
-router.put('/:id', (0, validateRequest_1.default)(service_validation_1.ServiceValidations.serviceUpdateValidationSchema), service_controller_1.ServiceControllers.updateService);
+router.put('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), (0, validateRequest_1.default)(service_validation_1.ServiceValidations.serviceUpdateValidationSchema), service_controller_1.ServiceControllers.updateService);
 //delete service route
-router.delete('/:id', service_controller_1.ServiceControllers.deleteService);
+router.delete('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), service_controller_1.ServiceControllers.deleteService);
 exports.ServiceRoutes = router;
