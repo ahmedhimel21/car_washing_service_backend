@@ -1,377 +1,304 @@
 {
-	"info": {
-		"_postman_id": "5f10a9d7-4254-4b05-b2ff-7709fb237457",
-		"name": "car washing service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34976651"
-	},
-	"item": [
-		{
-			"name": "auth",
-			"item": [
-				{
-					"name": "Register user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Mr.X\",\r\n    \"email\": \"web2@programming-hero.com\",\r\n    \"password\": \"ph-password\",\r\n    \"phone\": \"1234567899\",\r\n    \"role\": \"user\", \r\n    \"address\": \"123 Main Street, City, Country\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/auth/signup",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"signup"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login admin",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"web@programming-hero.com\",\r\n    \"password\": \"ph-password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/auth/login",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"web1@programming-hero.com\",\r\n    \"password\": \"ph-password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/auth/login",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "service",
-			"item": [
-				{
-					"name": "create service",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Oil Change\",\r\n    \"description\": \"Regular engine oil change service\",\r\n    \"price\": 30,\r\n    \"duration\": 30\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/services",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get single service",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{car-washing}}/api/services/666ab6aa891214787284c138",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services",
-								"666ab6aa891214787284c138"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all services",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{car-washing}}/api/services",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update service",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"price\": 700\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/services/666acdd48bc191a69abbafab",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services",
-								"666acdd48bc191a69abbafab"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete service",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{car-washing}}/api/services/666acdd48bc191a69abbafab",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services",
-								"666acdd48bc191a69abbafab"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "slot",
-			"item": [
-				{
-					"name": "create slot",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"service\": \"666acdd48bc191a69abbafab\",\r\n    \"date\": \"2024-06-15\",\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"14:00\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/services/slots",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"services",
-								"slots"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all slots",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{car-washing}}/api/slots/availability",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"slots",
-								"availability"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Booking",
-			"item": [
-				{
-					"name": "create booking",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWIxQHByb2dyYW1taW5nLWhlcm8uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTgyNjA3NTgsImV4cCI6MTcyMDg1Mjc1OH0.kKCKgNCsm-hciMWcuTQIqX0YF3Ts1E7kLV16vjh0QIU",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"serviceId\": \"666ac732426320c1e4b6e997\",\r\n    \"slotId\": \"666ac76b426320c1e4b6e99e\",\r\n    \"vehicleType\": \"car\",\r\n    \"vehicleBrand\": \"Toyota\",\r\n    \"vehicleModel\": \"Camry\",\r\n    \"manufacturingYear\": 2020,\r\n    \"registrationPlate\": \"ABC123\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{car-washing}}/api/bookings",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"bookings"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all bookings",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNjY1MjUsImV4cCI6MTcyMDg1ODUyNX0.jF_bwADwpE7GLao9_2xvOu1NH_PwK1lN2XJz2evVJlc",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{car-washing}}/api/bookings",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"bookings"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get user bookings",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWIxQHByb2dyYW1taW5nLWhlcm8uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTgyNjczMjIsImV4cCI6MTcyMDg1OTMyMn0.PXEff5-SnpugD0wB7vQbg_c5UX5t896I3rq6q26JPhw",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{car-washing}}/api/my-bookings",
-							"host": [
-								"{{car-washing}}"
-							],
-							"path": [
-								"api",
-								"my-bookings"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "5f10a9d7-4254-4b05-b2ff-7709fb237457",
+    "name": "car washing service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34976651"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Mr.X\",\r\n    \"email\": \"web2@programming-hero.com\",\r\n    \"password\": \"ph-password\",\r\n    \"phone\": \"1234567899\",\r\n    \"role\": \"user\", \r\n    \"address\": \"123 Main Street, City, Country\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/auth/signup",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "auth", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"web@programming-hero.com\",\r\n    \"password\": \"ph-password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/auth/login",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"web1@programming-hero.com\",\r\n    \"password\": \"ph-password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/auth/login",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "service",
+      "item": [
+        {
+          "name": "create service",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cexcdCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Oil Change\",\r\n    \"description\": \"Regular engine oil change service\",\r\n    \"price\": 30,\r\n    \"duration\": 30\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/services",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get single service",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{car-washing}}/api/services/666ab6aa891214787284c138",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services", "666ab6aa891214787284c138"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all services",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{car-washing}}/api/services",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update service",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"price\": 700\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/services/666acdd48bc191a69abbafab",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services", "666acdd48bc191a69abbafab"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete service",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{car-washing}}/api/services/666acdd48bc191a69abbafab",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services", "666acdd48bc191a69abbafab"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "slot",
+      "item": [
+        {
+          "name": "create slot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNzU1MjIsImV4cCI6MTcyMDg2NzUyMn0.IR5NJR9R-IeTDv-U250VUgvW98jHr9kujgTWOVA5yMI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"service\": \"666acdd48bc191a69abbafab\",\r\n    \"date\": \"2024-06-15\",\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"14:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/services/slots",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "services", "slots"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all slots",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{car-washing}}/api/slots/availability",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "slots", "availability"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "create booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWIxQHByb2dyYW1taW5nLWhlcm8uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTgyNjA3NTgsImV4cCI6MTcyMDg1Mjc1OH0.kKCKgNCsm-hciMWcuTQIqX0YF3Ts1E7kLV16vjh0QIU",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"serviceId\": \"666ac732426320c1e4b6e997\",\r\n    \"slotId\": \"666ac76b426320c1e4b6e99e\",\r\n    \"vehicleType\": \"car\",\r\n    \"vehicleBrand\": \"Toyota\",\r\n    \"vehicleModel\": \"Camry\",\r\n    \"manufacturingYear\": 2020,\r\n    \"registrationPlate\": \"ABC123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{car-washing}}/api/bookings",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "bookings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTgyNjY1MjUsImV4cCI6MTcyMDg1ODUyNX0.jF_bwADwpE7GLao9_2xvOu1NH_PwK1lN2XJz2evVJlc",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{car-washing}}/api/bookings",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "bookings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get user bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWIxQHByb2dyYW1taW5nLWhlcm8uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTgyNjczMjIsImV4cCI6MTcyMDg1OTMyMn0.PXEff5-SnpugD0wB7vQbg_c5UX5t896I3rq6q26JPhw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{car-washing}}/api/my-bookings",
+              "host": ["{{car-washing}}"],
+              "path": ["api", "my-bookings"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
