@@ -7,6 +7,7 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
+- [ER Diagram](#er-diagram)
 - [Setup and Installation](#setup-and-installation)
 - [postman collection](#postman-Collection)
 - [Usage](#usage)
