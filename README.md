@@ -8,6 +8,7 @@
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Setup and Installation](#setup-and-installation)
+- [postman collection](#postman-Collection)
 - [Usage](#usage)
 
 ## Introduction
@@ -75,5 +76,19 @@ Follow these steps to set up the project locally:
    ```
 7. **Open the application in your browser:**
    ```
-   Go to http://localhost:3000
+   Go to http://localhost:5000
    ```
+
+### Postman Collection
+
+To facilitate testing and development, we provide a Postman collection that includes predefined requests. You can download the collection file here:
+
+- [Download Postman Collection](path/to/your/postman/collection.json)
+
+## Usage
+
+To use the application, follow these steps:
+
+1. **Sign Up/Login**: Access the authentication endpoints to create an account or log in.
+2. **Protected Routes**: Use JWT to access protected routes after authentication.
+3. **Database Operations**: Perform CRUD operations using the provided API endpoints.
