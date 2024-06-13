@@ -5,7 +5,6 @@ const booking_constant_1 = require("./booking.constant");
 const bookingSchema = new mongoose_1.Schema({
     customer: {
         type: mongoose_1.Schema.Types.ObjectId,
-        required: true,
         ref: 'user',
     },
     service: {

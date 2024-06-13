@@ -9,10 +9,11 @@ const router = Router()
 
 router.post(
   '/',
+  auth(USER_ROLE.user),
   validateRequest(BookingValidations.bookingCreateValidationSchema),
   BookingControllers.createBooking,
 )
 
-router.get('/', auth(USER_ROLE.user), BookingControllers.getAllBookings)
+router.get('/', BookingControllers.getAllBookings)
 
 export const BookingRoutes = router

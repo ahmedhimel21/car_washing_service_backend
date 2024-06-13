@@ -17,7 +17,18 @@ const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
 const booking_service_1 = require("./booking.service");
 const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.BookingServices.createBookingIntoDB(req.body);
+    const user = req.user;
+    const { serviceId: service, slotId: slot, vehicleType, vehicleBrand, vehicleModel, manufacturingYear, registrationPlate, } = req.body;
+    const modifiedObj = {
+        service: service,
+        slot: slot,
+        vehicleType,
+        vehicleBrand,
+        vehicleModel,
+        manufacturingYear,
+        registrationPlate,
+    };
+    const result = yield booking_service_1.BookingServices.createBookingIntoDB(modifiedObj, user);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,

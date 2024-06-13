@@ -1,9 +1,30 @@
 import catchAsync from '../../utility/catchAsync'
 import sendResponse from '../../utility/sendResponse'
+import { TBooking } from './booking.interface'
 import { BookingServices } from './booking.service'
 
 const createBooking = catchAsync(async (req, res) => {
-  const result = await BookingServices.createBookingIntoDB(req.body)
+  const user = req.user
+  const {
+    serviceId: service,
+    slotId: slot,
+    vehicleType,
+    vehicleBrand,
+    vehicleModel,
+    manufacturingYear,
+    registrationPlate,
+  } = req.body
+
+  const modifiedObj: TBooking = {
+    service: service,
+    slot: slot,
+    vehicleType,
+    vehicleBrand,
+    vehicleModel,
+    manufacturingYear,
+    registrationPlate,
+  }
+  const result = await BookingServices.createBookingIntoDB(modifiedObj, user)
   sendResponse(res, {
     statusCode: 200,
     success: true,

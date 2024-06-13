@@ -13,34 +13,56 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingServices = void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const AppError_1 = __importDefault(require("../../Error/AppError"));
 const service_model_1 = __importDefault(require("../service/service.model"));
 const slot_model_1 = __importDefault(require("../slot/slot.model"));
-const user_model_1 = __importDefault(require("../user/user.model"));
 const booking_model_1 = __importDefault(require("./booking.model"));
-const createBookingIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const isCustomerExists = yield user_model_1.default.findById(payload === null || payload === void 0 ? void 0 : payload.customer);
-    if (!isCustomerExists) {
-        throw new AppError_1.default(404, 'Customer not found!');
+const user_model_1 = __importDefault(require("../user/user.model"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const createBookingIntoDB = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        //find user from db
+        const customer = yield user_model_1.default.findOne({ email: user === null || user === void 0 ? void 0 : user.userEmail });
+        const customerId = customer === null || customer === void 0 ? void 0 : customer._id;
+        //check user is exists or not
+        if (!customer) {
+            throw new AppError_1.default(404, 'Customer not found');
+        }
+        //check is service exists or not
+        const serviceId = payload === null || payload === void 0 ? void 0 : payload.service;
+        const service = yield service_model_1.default.isServiceExists(serviceId);
+        if (!service) {
+            throw new AppError_1.default(404, 'Service not found!');
+        }
+        // check service deleted or not
+        if (service.isDeleted) {
+            throw new AppError_1.default(400, 'Unable to book, service is deleted');
+        }
+        //check slots exists or not
+        const isSlotExists = yield slot_model_1.default.findById(payload.slot);
+        if (!isSlotExists) {
+            throw new AppError_1.default(404, 'Slot not found!');
+        }
+        //check slots is booked or available
+        if (isSlotExists.isBooked === 'booked') {
+            throw new AppError_1.default(404, 'Slot is already booked!');
+        }
+        //creating booking- transaction-1
+        const [booking] = yield booking_model_1.default.create([Object.assign(Object.assign({}, payload), { customer: customerId })], { session });
+        (yield (yield booking.populate('customer')).populate('service')).populate('slot');
+        //updating slot status: transaction-2
+        yield isSlotExists.updateOne({ isBooked: 'booked' }, { new: true, session });
+        yield session.commitTransaction();
+        yield session.endSession();
+        return booking;
     }
-    const serviceId = payload === null || payload === void 0 ? void 0 : payload.service;
-    const service = yield service_model_1.default.isServiceExists(serviceId);
-    if (!service) {
-        throw new AppError_1.default(404, 'Service not found!');
+    catch (err) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw err;
     }
-    if (service.isDeleted) {
-        throw new AppError_1.default(400, 'Unable to book, service is deleted');
-    }
-    const isSlotExists = yield slot_model_1.default.findById(payload.slot);
-    if (!isSlotExists) {
-        throw new AppError_1.default(404, 'Slot not found!');
-    }
-    if (isSlotExists.isBooked === 'booked') {
-        throw new AppError_1.default(404, 'Slot is booked!');
-    }
-    const result = (yield (yield (yield booking_model_1.default.create(payload)).populate('customer')).populate('service')).populate('slot');
-    return result;
 });
 const getAllBookingsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_model_1.default.find()

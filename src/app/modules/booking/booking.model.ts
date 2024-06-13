@@ -6,7 +6,6 @@ const bookingSchema = new Schema<TBooking>(
   {
     customer: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'user',
     },
     service: {
