@@ -25,7 +25,11 @@ const moduleRoutes = [
         route: slot_route_1.SlotRoutes,
     },
     {
-        path: '/bookings',
+        path: '/v1',
+        route: booking_route_1.BookingRoutes,
+    },
+    {
+        path: '/my-bookings',
         route: booking_route_1.BookingRoutes,
     },
 ];

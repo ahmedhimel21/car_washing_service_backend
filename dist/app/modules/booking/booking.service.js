@@ -71,7 +71,17 @@ const getAllBookingsFromDB = () => __awaiter(void 0, void 0, void 0, function* (
         .populate('slot');
     return result;
 });
+const getUserBookingsFromDB = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const customer = yield user_model_1.default.findOne({ email: user === null || user === void 0 ? void 0 : user.userEmail });
+    const customerId = customer === null || customer === void 0 ? void 0 : customer._id;
+    const result = yield booking_model_1.default.find({ customer: customerId })
+        .populate('customer')
+        .populate('service')
+        .populate('slot');
+    return result;
+});
 exports.BookingServices = {
     createBookingIntoDB,
     getAllBookingsFromDB,
+    getUserBookingsFromDB,
 };

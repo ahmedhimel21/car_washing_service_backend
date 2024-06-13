@@ -27,7 +27,7 @@ const auth = (...userRoles) => {
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_access_secret);
         //check user role
         if (userRoles && !userRoles.includes(decoded === null || decoded === void 0 ? void 0 : decoded.role)) {
-            throw new AppError_1.default(401, 'You are not authorized');
+            throw new AppError_1.default(401, 'You have no access to this route');
         }
         req.user = decoded;
         next();
