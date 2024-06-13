@@ -83,7 +83,7 @@ Follow these steps to set up the project locally:
 
 To facilitate testing and development, we provide a Postman collection that includes predefined requests. You can download the collection file here:
 
-- [Download Postman Collection](path/to/your/postman/collection.json)
+- [Download Postman Collection](./car%20washing%20service.postman_collection.json)
 
 ## Usage
 
