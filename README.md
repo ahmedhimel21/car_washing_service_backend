@@ -1,4 +1,4 @@
-# Template Project
+# Car Wash Management System
 
 [Live URL](https://your-new-vercel-live-url.com)
 
@@ -9,13 +9,10 @@
 - [Technologies Used](#technologies-used)
 - [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Introduction
 
-**Template Project** is a boilerplate setup for a Node.js application using TypeScript. This project aims to provide a scalable and maintainable codebase with essential tools and configurations.
+**Car Wash Management System** is a comprehensive solution for managing car wash services. This application allows customers to book car wash services online, and administrators to manage bookings, services, and availability efficiently. The system is built using Node.js and TypeScript, providing a scalable and maintainable codebase with essential tools and configurations.
 
 ## Features
 
@@ -55,4 +52,28 @@ Follow these steps to set up the project locally:
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/ahmedhimel21/car_washing_service_backend
+   ```
+2. **Navigate to the project directory:**
+   ```sh
+   cd your-repo-name
+   ```
+3. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+4. **Set up environment variables:**
+   ```
+   Create a .env file in the root directory and add the necessary environment variables as shown in .env.example.
+   ```
+5. **Build the project:**
+   ```sh
+   npm run build
+   ```
+6. **Start the application in development mode:**
+   ```sh
+   npm run start:dev
+   ```
+7. **Open the application in your browser:**
+   ```
+   Go to http://localhost:3000
    ```
