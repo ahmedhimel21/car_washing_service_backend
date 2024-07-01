@@ -21,4 +21,6 @@ export type TBooking = {
   vehicleModel: string
   manufacturingYear: number
   registrationPlate: string
+  createdAt?: Date
+  updatedAt?: Date
 }

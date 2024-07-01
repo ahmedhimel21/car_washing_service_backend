@@ -42,7 +42,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         expiresIn: config_1.default.jwt_access_expires_in,
     });
     return {
-        accessToken: `Bearer ${accessToken}`,
+        accessToken: accessToken,
         user,
     };
 });

@@ -51,7 +51,6 @@ const createBookingIntoDB = (payload, user) => __awaiter(void 0, void 0, void 0,
         }
         //creating booking- transaction-1
         const [booking] = yield booking_model_1.default.create([Object.assign(Object.assign({}, payload), { customer: customerId })], { session });
-        (yield (yield booking.populate('customer')).populate('service')).populate('slot');
         //updating slot status: transaction-2
         yield slot_model_1.default.findByIdAndUpdate(payload.slot, { isBooked: 'booked' }, { new: true, session });
         yield session.commitTransaction();
@@ -75,9 +74,9 @@ const getUserBookingsFromDB = (user) => __awaiter(void 0, void 0, void 0, functi
     const customer = yield user_model_1.default.findOne({ email: user === null || user === void 0 ? void 0 : user.userEmail });
     const customerId = customer === null || customer === void 0 ? void 0 : customer._id;
     const result = yield booking_model_1.default.find({ customer: customerId })
-        .populate('customer')
         .populate('service')
-        .populate('slot');
+        .populate('slot')
+        .lean();
     return !result.length ? [] : result;
 });
 exports.BookingServices = {

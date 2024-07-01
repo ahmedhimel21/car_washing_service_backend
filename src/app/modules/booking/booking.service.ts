@@ -7,6 +7,7 @@ import { TBooking } from './booking.interface'
 import Booking from './booking.model'
 import User from '../user/user.model'
 import mongoose from 'mongoose'
+import { IService, ISlot } from './booking.type'
 
 const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
   const session = await mongoose.startSession()
@@ -43,10 +44,6 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
       [{ ...payload, customer: customerId }],
       { session },
     )
-    // Populate the booking
-    ;(await (await booking.populate('customer')).populate('service')).populate(
-      'slot',
-    )
 
     //updating slot status: transaction-2
     await Slot.findByIdAndUpdate(
@@ -77,9 +74,10 @@ const getUserBookingsFromDB = async (user: JwtPayload) => {
   const customer = await User.findOne({ email: user?.userEmail })
   const customerId = customer?._id
   const result = await Booking.find({ customer: customerId })
-    .populate('customer')
-    .populate('service')
-    .populate('slot')
+    .populate<{ service: IService }>('service')
+    .populate<{ slot: ISlot }>('slot')
+    .lean()
+
   return !result.length ? [] : result
 }
 

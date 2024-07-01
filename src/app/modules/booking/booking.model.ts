@@ -23,6 +23,10 @@ const bookingSchema = new Schema<TBooking>(
       enum: vehicleTypesEnum,
       required: true,
     },
+    vehicleBrand: {
+      type: String,
+      required: true,
+    },
     vehicleModel: {
       type: String,
       required: true,
@@ -39,6 +43,12 @@ const bookingSchema = new Schema<TBooking>(
   },
   { timestamps: true },
 )
+
+bookingSchema.methods.toJSON = function () {
+  const obj = this.toObject()
+  delete obj.customer.role
+  return obj
+}
 
 const Booking = model<TBooking>('booking', bookingSchema)
 export default Booking

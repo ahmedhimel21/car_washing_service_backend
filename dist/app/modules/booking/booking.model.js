@@ -22,6 +22,10 @@ const bookingSchema = new mongoose_1.Schema({
         enum: booking_constant_1.vehicleTypesEnum,
         required: true,
     },
+    vehicleBrand: {
+        type: String,
+        required: true,
+    },
     vehicleModel: {
         type: String,
         required: true,
@@ -36,5 +40,10 @@ const bookingSchema = new mongoose_1.Schema({
         unique: true,
     },
 }, { timestamps: true });
+bookingSchema.methods.toJSON = function () {
+    const obj = this.toObject();
+    delete obj.customer.role;
+    return obj;
+};
 const Booking = (0, mongoose_1.model)('booking', bookingSchema);
 exports.default = Booking;
