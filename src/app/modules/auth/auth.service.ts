@@ -6,6 +6,7 @@ import { TLoginUser } from './auth.interface'
 import status from 'http-status'
 import bcrypt from 'bcrypt'
 import { createToken } from './auth.utils'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const registeredUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload)
@@ -48,7 +49,34 @@ const loginUser = async (payload: TLoginUser) => {
   }
 }
 
+const refreshToken = async (token: string) => {
+  const decoded = jwt.verify(
+    token,
+    config.jwt_refresh_secret as string,
+  ) as JwtPayload
+  console.log(decoded)
+  const { userEmail } = decoded
+  const user = await User.findOne({ email: userEmail })
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, 'User does not exists!')
+  }
+
+  const jwtPayload = {
+    userEmail: user?.email,
+    role: user?.role,
+  }
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  )
+  return {
+    accessToken,
+  }
+}
+
 export const AuthServices = {
   registeredUserIntoDB,
   loginUser,
+  refreshToken,
 }
