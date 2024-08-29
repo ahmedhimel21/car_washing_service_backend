@@ -12,10 +12,15 @@ const auth = (...userRoles: TUserRole[]) => {
     if (!token) {
       throw new AppError(401, 'You are not authorized')
     }
-    const decoded = jwt.verify(
-      token,
-      config.jwt_access_secret as string,
-    ) as JwtPayload
+    let decoded
+    try {
+      decoded = jwt.verify(
+        token,
+        config.jwt_access_secret as string,
+      ) as JwtPayload
+    } catch (err) {
+      throw new AppError(401, 'Unauthorized')
+    }
     //check user role
     if (userRoles && !userRoles.includes(decoded?.role)) {
       throw new AppError(401, 'You have no access to this route')
