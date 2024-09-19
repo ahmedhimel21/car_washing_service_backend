@@ -28,7 +28,36 @@ const buildQuery = async <T>(
     'fields',
   ]
   excludesFields.forEach(ele => delete queryObj[ele])
+
+  // Handle min and max price filters
+  if (query?.minPrice || query?.maxPrice) {
+    const priceFilter: { $gte?: number; $lte?: number } = {}
+
+    // Convert minPrice and maxPrice to numbers
+    const minPrice = Number(query.minPrice)
+    const maxPrice = Number(query.maxPrice)
+
+    // Only apply the filters if minPrice and maxPrice are valid numbers
+    if (!isNaN(minPrice)) {
+      priceFilter.$gte = minPrice // Greater than or equal to minPrice
+    }
+    if (!isNaN(maxPrice)) {
+      priceFilter.$lte = maxPrice // Less than or equal to maxPrice
+    }
+
+    // Apply the price filter to the 'price' field
+    if (Object.keys(priceFilter).length > 0) {
+      queryObj['price'] = priceFilter
+    }
+
+    // Remove minPrice and maxPrice from queryObj as they are now processed
+    delete queryObj.minPrice
+    delete queryObj.maxPrice
+  }
+
   queryConstructor = queryConstructor.find(queryObj as FilterQuery<T>)
+
+  // queryConstructor = queryConstructor.find(queryObj as FilterQuery<T>)
 
   //sort query
   let sort = '-createdAt'

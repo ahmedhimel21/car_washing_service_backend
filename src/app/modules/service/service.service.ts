@@ -1,3 +1,4 @@
+import buildQuery from '../../builder/queryBuilder'
 import AppError from '../../Error/AppError'
 import { TService } from './service.interface'
 import Service from './service.model'
@@ -20,8 +21,9 @@ const getSpecificServiceFromDB = async (id: string) => {
 }
 
 //get all services
-const getAllServicesFromDB = async () => {
-  const result = await Service.find()
+const getAllServicesFromDB = async (query: Record<string, unknown>) => {
+  const searchAbleFields = ['name', 'description']
+  const result = await buildQuery(Service.find(), query, searchAbleFields)
   return !result.length ? [] : result
 }
 

@@ -26,7 +26,8 @@ const getSpecificService = catchAsync(async (req, res) => {
 
 //get all services
 const getAllServicesFromDB = catchAsync(async (req, res) => {
-  const result = await ServiceServices.getAllServicesFromDB()
+  const query = req.query
+  const result = await ServiceServices.getAllServicesFromDB(query)
   sendResponse(res, {
     statusCode: !result.length ? 404 : 200,
     success: !result.length ? false : true,
