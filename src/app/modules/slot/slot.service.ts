@@ -25,10 +25,15 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return result
 }
 
-const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
+const getAllSlotsFromDB = async (
+  query: Record<string, unknown>,
+  serviceId: string,
+) => {
   const searchAbleFields = ['date']
   const result = await buildQuery(
-    Slot.find({ isBooked: 'available' }).populate('service'),
+    Slot.find({ isBooked: 'available', service: serviceId }).populate(
+      'service',
+    ),
     query,
     searchAbleFields,
   )

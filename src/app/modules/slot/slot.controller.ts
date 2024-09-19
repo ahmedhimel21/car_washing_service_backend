@@ -14,8 +14,9 @@ const createSlot = catchAsync(async (req, res) => {
 })
 //get all slots from db
 const getAllSlots = catchAsync(async (req, res) => {
+  const { serviceId } = req.params
   const query = req.query
-  const result = await SlotServices.getAllSlotsFromDB(query)
+  const result = await SlotServices.getAllSlotsFromDB(query, serviceId)
   sendResponse(res, {
     statusCode: !result.length ? 404 : 200,
     success: !result.length ? false : true,

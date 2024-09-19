@@ -14,6 +14,6 @@ router.post(
   SlotControllers.createSlot,
 )
 
-router.get('/availability', SlotControllers.getAllSlots)
+router.get('/availability/:serviceId', SlotControllers.getAllSlots)
 
 export const SlotRoutes = router
