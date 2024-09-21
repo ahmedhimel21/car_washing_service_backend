@@ -18,7 +18,7 @@ router.get('/', ServiceControllers.getAllServicesFromDB)
 
 //update service route
 router.put(
-  '/:id',
+  '/update/:id',
   auth(USER_ROLE.admin),
   validateRequest(ServiceValidations.serviceUpdateValidationSchema),
   ServiceControllers.updateService,
