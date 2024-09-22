@@ -25,7 +25,7 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return result
 }
 
-const getAllSlotsFromDB = async (
+const getAvailableSlotsFromDB = async (
   query: Record<string, unknown>,
   serviceId: string,
 ) => {
@@ -40,7 +40,24 @@ const getAllSlotsFromDB = async (
   return !result.length ? [] : result
 }
 
+//get all slots
+const getAllSlotsFromDB = async () => {
+  const result = await Slot.find().populate('service')
+  return !result.length ? [] : result
+}
+
+//update slot
+const updateSlotIntoDB = async (id: string, payload: Partial<TSlot>) => {
+  const result = await Slot.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  })
+  return result
+}
+
 export const SlotServices = {
   createSlotIntoDB,
+  getAvailableSlotsFromDB,
   getAllSlotsFromDB,
+  updateSlotIntoDB,
 }

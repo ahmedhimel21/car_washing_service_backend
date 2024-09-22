@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from 'jsonwebtoken'
 import AppError from '../../Error/AppError'
@@ -8,8 +9,13 @@ import Booking from './booking.model'
 import User from '../user/user.model'
 import mongoose from 'mongoose'
 import { IService, ISlot } from './booking.type'
+import axios from 'axios'
 
-const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
+const createBookingIntoDB = async (
+  payload: TBooking,
+  user: JwtPayload,
+  formData: any,
+) => {
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
@@ -39,11 +45,20 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     if (isSlotExists.isBooked === 'booked') {
       throw new AppError(404, 'Slot is already booked!')
     }
-    //creating booking- transaction-1
-    const [booking] = await Booking.create(
-      [{ ...payload, customer: customerId }],
-      { session },
+    // make payment
+
+    const { data } = await axios.post(
+      'https://secure.aamarpay.com/jsonpost.php',
+      formData,
     )
+
+    if (data.result) {
+      //creating booking- transaction-1
+      const [booking] = await Booking.create(
+        [{ ...payload, customer: customerId }],
+        { session },
+      )
+    }
 
     //updating slot status: transaction-2
     await Slot.findByIdAndUpdate(
@@ -54,7 +69,7 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
 
     await session.commitTransaction()
     await session.endSession()
-    return booking
+    return data
   } catch (err) {
     await session.abortTransaction()
     await session.endSession()

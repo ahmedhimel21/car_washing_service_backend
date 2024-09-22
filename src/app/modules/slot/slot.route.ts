@@ -13,7 +13,10 @@ router.post(
   validateRequest(SlotValidations.slotCreateValidationSchema),
   SlotControllers.createSlot,
 )
+router.put('/update/:id', auth(USER_ROLE.admin), SlotControllers.updateSlot)
 
-router.get('/availability/:serviceId', SlotControllers.getAllSlots)
+router.get('/availability/:serviceId', SlotControllers.getAvailableSlots)
+
+router.get('/', SlotControllers.getAllSlots)
 
 export const SlotRoutes = router
