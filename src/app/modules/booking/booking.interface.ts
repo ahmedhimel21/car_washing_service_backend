@@ -17,6 +17,9 @@ export type TBooking = {
   service: Types.ObjectId
   slot: Types.ObjectId
   vehicleType: TVehicleTypes
+  transactionId: string
+  status: string
+  paymentStatus: string
   cus_name?: string
   cus_email?: string
   cus_phone?: string

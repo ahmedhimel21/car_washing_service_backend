@@ -48,7 +48,7 @@ const createBookingIntoDB = async (
     // make payment
 
     const { data } = await axios.post(
-      'https://secure.aamarpay.com/jsonpost.php',
+      'https://sandbox.aamarpay.com/jsonpost.php',
       formData,
     )
 

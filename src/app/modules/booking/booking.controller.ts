@@ -28,6 +28,9 @@ const createBooking = catchAsync(async (req, res) => {
     vehicleModel,
     manufacturingYear,
     registrationPlate,
+    transactionId: crypto.randomBytes(16).toString('hex'),
+    status: 'pending',
+    paymentStatus: 'pending',
   }
 
   const modifiedPaymentObj = {
@@ -35,31 +38,20 @@ const createBooking = catchAsync(async (req, res) => {
     cus_email,
     cus_phone,
     amount,
-    tran_id: crypto.randomBytes(16).toString('hex'),
+    tran_id: modifiedObj?.transactionId,
     signature_key: 'dbb74894e82415a2f7ff0ec3a97e4183',
     store_id: 'aamarpaytest',
     currency: 'BDT',
     desc: 'Service Booking',
-    cus_add1: '53, Gausul Azam Road, Sector-14, Dhaka, Bangladesh',
-    cus_add2: 'Dhaka',
-    cus_city: 'Dhaka',
+    cus_add1: 'N/A',
+    cus_add2: 'N/A',
+    cus_city: 'N/A',
     cus_country: 'Bangladesh',
-    success_url: `http://localhost:5000/payment/success`,
-    fail_url: `http://localhost:5000/payment/success`,
-    cancel_url: `http://localhost:5000/payment/successk`,
+    success_url: `http://localhost:5000/api/payment/confirmation?transactionId=${modifiedObj?.transactionId}&status=success`,
+    fail_url: `http://localhost:5000/api/payment/confirmation?status=failed`,
+    cancel_url: `http://localhost:5173/`,
     type: 'json',
   }
-  // const result = await (
-  //   await (
-  //     await (
-  //       await BookingServices.createBookingIntoDB(
-  //         modifiedObj,
-  //         user,
-  //         modifiedPaymentObj,
-  //       )
-  //     ).populate('customer')
-  //   ).populate('service')
-  // ).populate('slot')
 
   const result = await BookingServices.createBookingIntoDB(
     modifiedObj,

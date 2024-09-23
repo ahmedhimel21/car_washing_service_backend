@@ -5,6 +5,7 @@ import { SlotRoutes } from '../modules/slot/slot.route'
 import { BookingRoutes } from '../modules/booking/booking.route'
 import { ReviewRoutes } from '../modules/review/review.route'
 import { UserRoutes } from '../modules/user/user.routes'
+import { PaymentRoutes } from '../modules/payment/payment.routes'
 
 const router = Router()
 
@@ -36,6 +37,10 @@ const moduleRoutes = [
   {
     path: '/api/users',
     route: UserRoutes,
+  },
+  {
+    path: '/api/payment',
+    route: PaymentRoutes,
   },
 ]
 

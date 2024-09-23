@@ -39,6 +39,15 @@ const bookingSchema = new Schema<TBooking>(
       type: String,
       required: true,
     },
+    transactionId: {
+      type: String,
+    },
+    status: {
+      type: String,
+    },
+    paymentStatus: {
+      type: String,
+    },
   },
   { timestamps: true },
 )
