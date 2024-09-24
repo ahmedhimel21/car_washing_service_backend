@@ -118,8 +118,20 @@ const getUserBookings = catchAsync(async (req, res) => {
   })
 })
 
+//get most booked service
+const getMostBookedService = catchAsync(async (req, res) => {
+  const result = await BookingServices.getMostBookedServiceFromDB()
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Most booked service data retrieved succesfully',
+    data: result,
+  })
+})
+
 export const BookingControllers = {
   createBooking,
   getAllBookings,
   getUserBookings,
+  getMostBookedService,
 }

@@ -26,4 +26,6 @@ router.get(
   BookingControllers.getUserBookings,
 )
 
+router.get('/most-booked-services', BookingControllers.getMostBookedService)
+
 export const BookingRoutes = router

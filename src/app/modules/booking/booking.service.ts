@@ -96,8 +96,43 @@ const getUserBookingsFromDB = async (user: JwtPayload) => {
   return !result.length ? [] : result
 }
 
+//get most booked service
+const getMostBookedServiceFromDB = async () => {
+  const result = await Booking.aggregate([
+    {
+      $group: {
+        _id: '$service',
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $lookup: {
+        from: 'services', // Assuming you have a `services` collection
+        localField: '_id',
+        foreignField: '_id',
+        as: 'serviceDetails',
+      },
+    },
+    {
+      $unwind: '$serviceDetails',
+    },
+    {
+      $project: {
+        _id: 0,
+        serviceName: '$serviceDetails.name',
+        count: 1,
+      },
+    },
+    {
+      $sort: { count: -1 }, // Sort by the most booked services
+    },
+  ])
+  return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingsFromDB,
   getUserBookingsFromDB,
+  getMostBookedServiceFromDB,
 }
