@@ -15,8 +15,8 @@ const paymentConfirmation = async (transactionId: string, status: string) => {
       },
     )
   }
-  const successFilePath = join(__dirname, '../../../views/success.ejs')
-  const failedFilePath = join(__dirname, '../../../views/failed.ejs')
+  const successFilePath = join(__dirname, '../../../../public/success.ejs')
+  const failedFilePath = join(__dirname, '../../../../public/failed.ejs')
   const successTemplate = await ejs.renderFile(successFilePath, {
     status,
     transactionId,

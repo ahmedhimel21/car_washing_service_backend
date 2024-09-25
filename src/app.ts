@@ -1,12 +1,13 @@
+/* eslint-disable no-undef */
 import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middleware/globalErrorHandler'
 import notFound from './app/middleware/notFoundRoute'
 import { routes } from './app/routes'
 import cookieParser from 'cookie-parser'
-import { join } from 'path'
+import path from 'path'
 const app: Application = express()
-
+app.use(express.static(path.join(__dirname, '../public')))
 // middleware
 app.use(
   cors({
@@ -19,9 +20,6 @@ app.use(cookieParser())
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs')
-// Set the path to the 'views' folder
-// eslint-disable-next-line no-undef
-app.set('views', join(__dirname, './views'))
 
 // application routes
 app.use('/', routes)

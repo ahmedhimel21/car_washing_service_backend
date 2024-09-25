@@ -26,8 +26,8 @@ const paymentConfirmation = (transactionId, status) => __awaiter(void 0, void 0,
             paymentStatus: 'paid',
         });
     }
-    const successFilePath = (0, path_1.join)(__dirname, '../../../views/success.ejs');
-    const failedFilePath = (0, path_1.join)(__dirname, '../../../views/failed.ejs');
+    const successFilePath = (0, path_1.join)(__dirname, '../../../../public/success.ejs');
+    const failedFilePath = (0, path_1.join)(__dirname, '../../../../public/failed.ejs');
     const successTemplate = yield ejs_1.default.renderFile(successFilePath, {
         status,
         transactionId,

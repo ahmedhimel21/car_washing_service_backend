@@ -46,9 +46,9 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         cus_add2: 'N/A',
         cus_city: 'N/A',
         cus_country: 'Bangladesh',
-        success_url: `http://localhost:5000/api/payment/confirmation?transactionId=${modifiedObj === null || modifiedObj === void 0 ? void 0 : modifiedObj.transactionId}&status=success`,
-        fail_url: `http://localhost:5000/api/payment/confirmation?status=failed`,
-        cancel_url: `http://localhost:5173/`,
+        success_url: `https://car-washing-backend.vercel.app/api/payment/confirmation?transactionId=${modifiedObj === null || modifiedObj === void 0 ? void 0 : modifiedObj.transactionId}&status=success`,
+        fail_url: `https://car-washing-backend.vercel.app/api/payment/confirmation?status=failed`,
+        cancel_url: `http://localhost:5173`,
         type: 'json',
     };
     const result = yield booking_service_1.BookingServices.createBookingIntoDB(modifiedObj, user, modifiedPaymentObj);
