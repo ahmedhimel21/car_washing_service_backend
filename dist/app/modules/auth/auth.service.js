@@ -17,8 +17,9 @@ const config_1 = __importDefault(require("../../config"));
 const AppError_1 = __importDefault(require("../../Error/AppError"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const http_status_1 = __importDefault(require("http-status"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const auth_utils_1 = require("./auth.utils");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const registeredUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.default.create(payload);
     return result;
@@ -38,15 +39,33 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         userEmail: user === null || user === void 0 ? void 0 : user.email,
         role: user === null || user === void 0 ? void 0 : user.role,
     };
-    const accessToken = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.jwt_access_secret, {
-        expiresIn: config_1.default.jwt_access_expires_in,
-    });
+    const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expires_in);
+    const refreshToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_refresh_secret, config_1.default.jwt_refresh_expires_in);
     return {
         accessToken: accessToken,
+        refreshToken: refreshToken,
         user,
+    };
+});
+const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_refresh_secret);
+    console.log(decoded);
+    const { userEmail } = decoded;
+    const user = yield user_model_1.default.findOne({ email: userEmail });
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'User does not exists!');
+    }
+    const jwtPayload = {
+        userEmail: user === null || user === void 0 ? void 0 : user.email,
+        role: user === null || user === void 0 ? void 0 : user.role,
+    };
+    const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expires_in);
+    return {
+        accessToken,
     };
 });
 exports.AuthServices = {
     registeredUserIntoDB,
     loginUser,
+    refreshToken,
 };

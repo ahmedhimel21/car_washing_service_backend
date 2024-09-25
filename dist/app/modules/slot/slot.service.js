@@ -35,12 +35,27 @@ const createSlotIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     const result = yield slot_model_1.default.create(slots);
     return result;
 });
-const getAllSlotsFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+const getAvailableSlotsFromDB = (query, serviceId) => __awaiter(void 0, void 0, void 0, function* () {
     const searchAbleFields = ['date'];
-    const result = yield (0, queryBuilder_1.default)(slot_model_1.default.find({ isBooked: 'available' }).populate('service'), query, searchAbleFields);
+    const result = yield (0, queryBuilder_1.default)(slot_model_1.default.find({ isBooked: 'available', service: serviceId }).populate('service'), query, searchAbleFields);
     return !result.length ? [] : result;
+});
+//get all slots
+const getAllSlotsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_model_1.default.find().populate('service');
+    return !result.length ? [] : result;
+});
+//update slot
+const updateSlotIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_model_1.default.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true,
+    });
+    return result;
 });
 exports.SlotServices = {
     createSlotIntoDB,
+    getAvailableSlotsFromDB,
     getAllSlotsFromDB,
+    updateSlotIntoDB,
 };

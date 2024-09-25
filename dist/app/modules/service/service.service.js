@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceServices = void 0;
+const queryBuilder_1 = __importDefault(require("../../builder/queryBuilder"));
 const AppError_1 = __importDefault(require("../../Error/AppError"));
 const service_model_1 = __importDefault(require("./service.model"));
 const http_status_1 = __importDefault(require("http-status"));
@@ -31,8 +32,9 @@ const getSpecificServiceFromDB = (id) => __awaiter(void 0, void 0, void 0, funct
     return result;
 });
 //get all services
-const getAllServicesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield service_model_1.default.find();
+const getAllServicesFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchAbleFields = ['name', 'description'];
+    const result = yield (0, queryBuilder_1.default)(service_model_1.default.find(), query, searchAbleFields);
     return !result.length ? [] : result;
 });
 //update service

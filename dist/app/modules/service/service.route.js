@@ -18,7 +18,7 @@ router.get('/:id', service_controller_1.ServiceControllers.getSpecificService);
 //get all services route
 router.get('/', service_controller_1.ServiceControllers.getAllServicesFromDB);
 //update service route
-router.put('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), (0, validateRequest_1.default)(service_validation_1.ServiceValidations.serviceUpdateValidationSchema), service_controller_1.ServiceControllers.updateService);
+router.put('/update/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), (0, validateRequest_1.default)(service_validation_1.ServiceValidations.serviceUpdateValidationSchema), service_controller_1.ServiceControllers.updateService);
 //delete service route
 router.delete('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), service_controller_1.ServiceControllers.deleteService);
 exports.ServiceRoutes = router;

@@ -16,9 +16,10 @@ exports.BookingControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
 const booking_service_1 = require("./booking.service");
+const crypto_1 = __importDefault(require("crypto"));
 const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
-    const { serviceId: service, slotId: slot, vehicleType, vehicleBrand, vehicleModel, manufacturingYear, registrationPlate, } = req.body;
+    const { cus_name, cus_email, cus_phone, amount, serviceId: service, slotId: slot, vehicleType, vehicleBrand, vehicleModel, manufacturingYear, registrationPlate, } = req.body;
     const modifiedObj = {
         service: service,
         slot: slot,
@@ -27,8 +28,30 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         vehicleModel,
         manufacturingYear,
         registrationPlate,
+        transactionId: crypto_1.default.randomBytes(16).toString('hex'),
+        status: 'pending',
+        paymentStatus: 'pending',
     };
-    const result = yield (yield (yield (yield booking_service_1.BookingServices.createBookingIntoDB(modifiedObj, user)).populate('customer')).populate('service')).populate('slot');
+    const modifiedPaymentObj = {
+        cus_name,
+        cus_email,
+        cus_phone,
+        amount,
+        tran_id: modifiedObj === null || modifiedObj === void 0 ? void 0 : modifiedObj.transactionId,
+        signature_key: 'dbb74894e82415a2f7ff0ec3a97e4183',
+        store_id: 'aamarpaytest',
+        currency: 'BDT',
+        desc: 'Service Booking',
+        cus_add1: 'N/A',
+        cus_add2: 'N/A',
+        cus_city: 'N/A',
+        cus_country: 'Bangladesh',
+        success_url: `http://localhost:5000/api/payment/confirmation?transactionId=${modifiedObj === null || modifiedObj === void 0 ? void 0 : modifiedObj.transactionId}&status=success`,
+        fail_url: `http://localhost:5000/api/payment/confirmation?status=failed`,
+        cancel_url: `http://localhost:5173/`,
+        type: 'json',
+    };
+    const result = yield booking_service_1.BookingServices.createBookingIntoDB(modifiedObj, user, modifiedPaymentObj);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
@@ -86,8 +109,19 @@ const getUserBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         data: transformedBookings,
     });
 }));
+//get most booked service
+const getMostBookedService = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_service_1.BookingServices.getMostBookedServiceFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: 'Most booked service data retrieved succesfully',
+        data: result,
+    });
+}));
 exports.BookingControllers = {
     createBooking,
     getAllBookings,
     getUserBookings,
+    getMostBookedService,
 };

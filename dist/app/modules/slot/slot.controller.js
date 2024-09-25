@@ -26,10 +26,11 @@ const createSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result,
     });
 }));
-//get all slots from db
-const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+//get available slots
+const getAvailableSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { serviceId } = req.params;
     const query = req.query;
-    const result = yield slot_service_1.SlotServices.getAllSlotsFromDB(query);
+    const result = yield slot_service_1.SlotServices.getAvailableSlotsFromDB(query, serviceId);
     (0, sendResponse_1.default)(res, {
         statusCode: !result.length ? 404 : 200,
         success: !result.length ? false : true,
@@ -39,7 +40,32 @@ const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
+//get all slots from db (with some query)
+const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_service_1.SlotServices.getAllSlotsFromDB();
+    (0, sendResponse_1.default)(res, {
+        statusCode: !result.length ? 404 : 200,
+        success: !result.length ? false : true,
+        message: !result.length
+            ? 'No Data Found'
+            : 'Available slots retrieved successfully',
+        data: result,
+    });
+}));
+//update slots
+const updateSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield slot_service_1.SlotServices.updateSlotIntoDB(id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Slot updated successfully',
+        data: result,
+    });
+}));
 exports.SlotControllers = {
     createSlot,
+    getAvailableSlots,
     getAllSlots,
+    updateSlot,
 };

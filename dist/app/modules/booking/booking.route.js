@@ -14,4 +14,5 @@ const router = (0, express_1.Router)();
 router.post('/bookings', (0, auth_1.default)(user_constant_1.USER_ROLE.user), (0, validateRequest_1.default)(booking_validation_1.BookingValidations.bookingCreateValidationSchema), booking_controller_1.BookingControllers.createBooking);
 router.get('/bookings', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), booking_controller_1.BookingControllers.getAllBookings);
 router.get('/my-bookings', (0, auth_1.default)(user_constant_1.USER_ROLE.user), booking_controller_1.BookingControllers.getUserBookings);
+router.get('/most-booked-services', booking_controller_1.BookingControllers.getMostBookedService);
 exports.BookingRoutes = router;

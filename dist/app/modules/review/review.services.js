@@ -8,19 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const validateRequest = (schema) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield schema.parseAsync({
-                body: req.body,
-                cookies: req.cookies,
-            });
-            next();
-        }
-        catch (err) {
-            next(err);
-        }
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.default = validateRequest;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReviewServices = void 0;
+const review_model_1 = __importDefault(require("./review.model"));
+const createReviewIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield review_model_1.default.create(payload);
+    return result;
+});
+const getAllReviewsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield review_model_1.default.find();
+    return !result.length ? [] : result;
+});
+exports.ReviewServices = {
+    createReviewIntoDB,
+    getAllReviewsFromDB,
+};

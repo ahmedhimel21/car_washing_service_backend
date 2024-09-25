@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthControllers = void 0;
+const config_1 = __importDefault(require("../../config"));
 const catchAsync_1 = __importDefault(require("../../utility/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utility/sendResponse"));
 const auth_service_1 = require("./auth.service");
@@ -29,16 +30,33 @@ const registeredUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 //login user
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.loginUser(req.body);
-    const { accessToken, user } = result;
+    const { accessToken, user, refreshToken } = result;
+    res.cookie('refreshToken', refreshToken, {
+        secure: config_1.default.NODE_ENV === 'production',
+        httpOnly: true,
+    });
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
         message: 'User logged in successfully!',
-        token: accessToken,
-        data: user,
+        data: {
+            accessToken,
+            user,
+        },
+    });
+}));
+const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.cookies;
+    const result = yield auth_service_1.AuthServices.refreshToken(refreshToken);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Access token is retrieved successfully!',
+        data: result,
     });
 }));
 exports.AuthControllers = {
     registeredUser,
     loginUser,
+    refreshToken,
 };

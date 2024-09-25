@@ -19,7 +19,8 @@ const slot_model_1 = __importDefault(require("../slot/slot.model"));
 const booking_model_1 = __importDefault(require("./booking.model"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const createBookingIntoDB = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
+const axios_1 = __importDefault(require("axios"));
+const createBookingIntoDB = (payload, user, formData) => __awaiter(void 0, void 0, void 0, function* () {
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
@@ -49,13 +50,17 @@ const createBookingIntoDB = (payload, user) => __awaiter(void 0, void 0, void 0,
         if (isSlotExists.isBooked === 'booked') {
             throw new AppError_1.default(404, 'Slot is already booked!');
         }
-        //creating booking- transaction-1
-        const [booking] = yield booking_model_1.default.create([Object.assign(Object.assign({}, payload), { customer: customerId })], { session });
+        // make payment
+        const { data } = yield axios_1.default.post('https://sandbox.aamarpay.com/jsonpost.php', formData);
+        if (data.result) {
+            //creating booking- transaction-1
+            const [booking] = yield booking_model_1.default.create([Object.assign(Object.assign({}, payload), { customer: customerId })], { session });
+        }
         //updating slot status: transaction-2
         yield slot_model_1.default.findByIdAndUpdate(payload.slot, { isBooked: 'booked' }, { new: true, session });
         yield session.commitTransaction();
         yield session.endSession();
-        return booking;
+        return data;
     }
     catch (err) {
         yield session.abortTransaction();
@@ -79,8 +84,42 @@ const getUserBookingsFromDB = (user) => __awaiter(void 0, void 0, void 0, functi
         .lean();
     return !result.length ? [] : result;
 });
+//get most booked service
+const getMostBookedServiceFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.default.aggregate([
+        {
+            $group: {
+                _id: '$service',
+                count: { $sum: 1 },
+            },
+        },
+        {
+            $lookup: {
+                from: 'services', // Assuming you have a `services` collection
+                localField: '_id',
+                foreignField: '_id',
+                as: 'serviceDetails',
+            },
+        },
+        {
+            $unwind: '$serviceDetails',
+        },
+        {
+            $project: {
+                _id: 0,
+                serviceName: '$serviceDetails.name',
+                count: 1,
+            },
+        },
+        {
+            $sort: { count: -1 }, // Sort by the most booked services
+        },
+    ]);
+    return result;
+});
 exports.BookingServices = {
     createBookingIntoDB,
     getAllBookingsFromDB,
     getUserBookingsFromDB,
+    getMostBookedServiceFromDB,
 };

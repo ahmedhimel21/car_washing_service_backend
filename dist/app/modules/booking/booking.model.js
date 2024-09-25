@@ -37,7 +37,15 @@ const bookingSchema = new mongoose_1.Schema({
     registrationPlate: {
         type: String,
         required: true,
-        unique: true,
+    },
+    transactionId: {
+        type: String,
+    },
+    status: {
+        type: String,
+    },
+    paymentStatus: {
+        type: String,
     },
 }, { timestamps: true });
 bookingSchema.methods.toJSON = function () {

@@ -9,18 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const validateRequest = (schema) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield schema.parseAsync({
-                body: req.body,
-                cookies: req.cookies,
-            });
-            next();
-        }
-        catch (err) {
-            next(err);
-        }
-    });
+exports.PaymentController = void 0;
+const payment_service_1 = require("./payment.service");
+const paymentConfirmation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = yield payment_service_1.PaymentConfirmation.paymentConfirmation((_a = req.query) === null || _a === void 0 ? void 0 : _a.transactionId, (_b = req.query) === null || _b === void 0 ? void 0 : _b.status);
+    res.send(result);
+});
+exports.PaymentController = {
+    paymentConfirmation,
 };
-exports.default = validateRequest;

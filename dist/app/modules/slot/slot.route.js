@@ -12,5 +12,7 @@ const auth_1 = __importDefault(require("../../middleware/auth"));
 const user_constant_1 = require("../user/user.constant");
 const router = (0, express_1.Router)();
 router.post('/slots', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), (0, validateRequest_1.default)(slot_validation_1.SlotValidations.slotCreateValidationSchema), slot_controller_1.SlotControllers.createSlot);
-router.get('/availability', slot_controller_1.SlotControllers.getAllSlots);
+router.put('/update/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.updateSlot);
+router.get('/availability/:serviceId', slot_controller_1.SlotControllers.getAvailableSlots);
+router.get('/', slot_controller_1.SlotControllers.getAllSlots);
 exports.SlotRoutes = router;
