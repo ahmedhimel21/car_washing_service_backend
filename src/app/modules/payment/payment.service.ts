@@ -4,16 +4,22 @@ import Booking from '../booking/booking.model'
 import verifyPayment from './payment.utils'
 import { join } from 'path'
 import ejs from 'ejs'
-
-const paymentConfirmation = async (transactionId: string, status: string) => {
+import Slot from '../slot/slot.model'
+const paymentConfirmation = async (
+  transactionId: string,
+  slotId: string,
+  status: string,
+) => {
   const verifyResponse = await verifyPayment(transactionId)
-  if (verifyResponse && verifyResponse.pay_status === 'pay_status') {
+
+  if (verifyResponse && verifyResponse.pay_status === 'Successful') {
     await Booking.findOneAndUpdate(
       { transactionId },
       {
         paymentStatus: 'paid',
       },
     )
+    await Slot.findByIdAndUpdate(slotId, { isBooked: 'booked' }, { new: true })
   }
   const successFilePath = join(__dirname, '../../../../public/success.ejs')
   const failedFilePath = join(__dirname, '../../../../public/failed.ejs')

@@ -47,9 +47,9 @@ const createBooking = catchAsync(async (req, res) => {
     cus_add2: 'N/A',
     cus_city: 'N/A',
     cus_country: 'Bangladesh',
-    success_url: `https://car-washing-backend.vercel.app/api/payment/confirmation?transactionId=${modifiedObj?.transactionId}&status=success`,
+    success_url: `https://car-washing-backend.vercel.app/api/payment/confirmation?transactionId=${modifiedObj?.transactionId}&slotId=${slot}&status=success`,
     fail_url: `https://car-washing-backend.vercel.app/api/payment/confirmation?status=failed`,
-    cancel_url: `http://localhost:5173`,
+    cancel_url: `https://car-washing-service.vercel.app`,
     type: 'json',
   }
 

@@ -20,6 +20,7 @@ const booking_model_1 = __importDefault(require("./booking.model"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const axios_1 = __importDefault(require("axios"));
+const payment_utils_1 = __importDefault(require("../payment/payment.utils"));
 const createBookingIntoDB = (payload, user, formData) => __awaiter(void 0, void 0, void 0, function* () {
     const session = yield mongoose_1.default.startSession();
     try {
@@ -56,8 +57,11 @@ const createBookingIntoDB = (payload, user, formData) => __awaiter(void 0, void 
             //creating booking- transaction-1
             const [booking] = yield booking_model_1.default.create([Object.assign(Object.assign({}, payload), { customer: customerId })], { session });
         }
-        //updating slot status: transaction-2
-        yield slot_model_1.default.findByIdAndUpdate(payload.slot, { isBooked: 'booked' }, { new: true, session });
+        const verifyResponse = yield (0, payment_utils_1.default)(formData === null || formData === void 0 ? void 0 : formData.tran_id);
+        if (verifyResponse && verifyResponse.pay_status === 'Successful') {
+            //updating slot status: transaction-2
+            yield slot_model_1.default.findByIdAndUpdate(payload.slot, { isBooked: 'booked' }, { new: true, session });
+        }
         yield session.commitTransaction();
         yield session.endSession();
         return data;

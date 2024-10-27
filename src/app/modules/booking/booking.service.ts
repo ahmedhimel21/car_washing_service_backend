@@ -10,6 +10,7 @@ import User from '../user/user.model'
 import mongoose from 'mongoose'
 import { IService, ISlot } from './booking.type'
 import axios from 'axios'
+import verifyPayment from '../payment/payment.utils'
 
 const createBookingIntoDB = async (
   payload: TBooking,
@@ -51,7 +52,6 @@ const createBookingIntoDB = async (
       'https://sandbox.aamarpay.com/jsonpost.php',
       formData,
     )
-
     if (data.result) {
       //creating booking- transaction-1
       const [booking] = await Booking.create(
@@ -59,13 +59,15 @@ const createBookingIntoDB = async (
         { session },
       )
     }
-
-    //updating slot status: transaction-2
-    await Slot.findByIdAndUpdate(
-      payload.slot,
-      { isBooked: 'booked' },
-      { new: true, session },
-    )
+    const verifyResponse = await verifyPayment(formData?.tran_id)
+    if (verifyResponse && verifyResponse.pay_status === 'Successful') {
+      //updating slot status: transaction-2
+      await Slot.findByIdAndUpdate(
+        payload.slot,
+        { isBooked: 'booked' },
+        { new: true, session },
+      )
+    }
 
     await session.commitTransaction()
     await session.endSession()

@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentController = void 0;
 const payment_service_1 = require("./payment.service");
 const paymentConfirmation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    const result = yield payment_service_1.PaymentConfirmation.paymentConfirmation((_a = req.query) === null || _a === void 0 ? void 0 : _a.transactionId, (_b = req.query) === null || _b === void 0 ? void 0 : _b.status);
+    var _a, _b, _c;
+    const result = yield payment_service_1.PaymentConfirmation.paymentConfirmation((_a = req.query) === null || _a === void 0 ? void 0 : _a.transactionId, (_b = req.query) === null || _b === void 0 ? void 0 : _b.slotId, (_c = req.query) === null || _c === void 0 ? void 0 : _c.status);
     res.send(result);
 });
 exports.PaymentController = {

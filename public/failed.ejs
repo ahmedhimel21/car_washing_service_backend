@@ -13,6 +13,21 @@
     <div class="text-center bg-white p-10 rounded-lg shadow-md">
       <h1 class="text-3xl font-bold text-red-600 mb-4"><%= status %>!</h1>
       <p class="text-lg text-gray-700"><%= message %></p>
+      <button
+      id="dashboardLink"
+      class="mt-6 inline-block bg-green-500 text-white py-2 px-4 rounded cursor-pointer"
+      >Go to Home</
+    >
     </div>
+    <script>
+      // Optional: Add a click event listener to the link
+      document
+        .getElementById('dashboardLink')
+        .addEventListener('click', function (event) {
+          // Prevent the default behavior if you want to handle something before redirect
+          // event.preventDefault();
+          window.location.href = 'https://car-washing-service.vercel.app' // Redirect immediately
+        })
+    </script>
   </body>
 </html>

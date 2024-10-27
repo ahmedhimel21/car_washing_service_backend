@@ -19,12 +19,14 @@ const booking_model_1 = __importDefault(require("../booking/booking.model"));
 const payment_utils_1 = __importDefault(require("./payment.utils"));
 const path_1 = require("path");
 const ejs_1 = __importDefault(require("ejs"));
-const paymentConfirmation = (transactionId, status) => __awaiter(void 0, void 0, void 0, function* () {
+const slot_model_1 = __importDefault(require("../slot/slot.model"));
+const paymentConfirmation = (transactionId, slotId, status) => __awaiter(void 0, void 0, void 0, function* () {
     const verifyResponse = yield (0, payment_utils_1.default)(transactionId);
-    if (verifyResponse && verifyResponse.pay_status === 'pay_status') {
+    if (verifyResponse && verifyResponse.pay_status === 'Successful') {
         yield booking_model_1.default.findOneAndUpdate({ transactionId }, {
             paymentStatus: 'paid',
         });
+        yield slot_model_1.default.findByIdAndUpdate(slotId, { isBooked: 'booked' }, { new: true });
     }
     const successFilePath = (0, path_1.join)(__dirname, '../../../../public/success.ejs');
     const failedFilePath = (0, path_1.join)(__dirname, '../../../../public/failed.ejs');
